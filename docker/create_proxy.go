@@ -8,7 +8,10 @@ import (
 )
 
 type DockerCreateProxyCommand struct {
-	Verbose bool `short:"v" long:"verbose" description:"log verbose debug information"`
+	Verbose    bool `short:"v" long:"verbose" description:"log verbose debug information"`
+	Positional struct {
+		Name string `positional-arg-name:"name"`
+	} `positional-args:"yes"`
 }
 
 func (cmd *DockerCreateProxyCommand) Execute(args []string) error {
@@ -16,7 +19,12 @@ func (cmd *DockerCreateProxyCommand) Execute(args []string) error {
 		util.StopLogging()
 	}
 
-	err := createProxy("docker-proxy", 18001)
+	name := "docker-proxy"
+	if cmd.Positional.Name != "" {
+		name = cmd.Positional.Name
+	}
+
+	err := createProxy(name, 18001)
 	if err != nil {
 		return err
 	}

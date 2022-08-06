@@ -1,15 +1,16 @@
 package security
 
 import (
-	"errors"
 	"fmt"
 	"org/sonatype/nx/api"
 	"org/sonatype/nx/util"
-	"strconv"
 )
 
 type SetAnonymousCommand struct {
-	Verbose bool `short:"v" long:"verbose" description:"log verbose debug information"`
+	Verbose    bool `short:"v" long:"verbose" description:"log verbose debug information"`
+	Positional struct {
+		Value bool `positional-arg-name:"value"`
+	} `positional-args:"yes"`
 }
 
 func (cmd *SetAnonymousCommand) Execute(args []string) error {
@@ -17,20 +18,11 @@ func (cmd *SetAnonymousCommand) Execute(args []string) error {
 		util.StopLogging()
 	}
 
-	value := true
-	if len(args) > 0 {
-		var err error
-		value, err = strconv.ParseBool(args[0])
-		if err != nil {
-			return errors.New("Please specify a boolean value")
-		}
-	}
-
-	err := setAnonymous(value)
+	err := setAnonymous(cmd.Positional.Value)
 	if err != nil {
 		return err
 	}
-	fmt.Println("Anonymous set to", value)
+	fmt.Println("Anonymous set to", cmd.Positional.Value)
 	return nil
 }
 

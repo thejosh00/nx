@@ -8,7 +8,10 @@ import (
 )
 
 type RawCreateHostedCommand struct {
-	Verbose bool `short:"v" long:"verbose" description:"log verbose debug information"`
+	Verbose    bool `short:"v" long:"verbose" description:"log verbose debug information"`
+	Positional struct {
+		Name string `positional-arg-name:"name"`
+	} `positional-args:"yes"`
 }
 
 func (cmd *RawCreateHostedCommand) Execute(args []string) error {
@@ -16,7 +19,12 @@ func (cmd *RawCreateHostedCommand) Execute(args []string) error {
 		util.StopLogging()
 	}
 
-	err := createHosted("raw-hosted")
+	name := "raw-hosted"
+	if cmd.Positional.Name != "" {
+		name = cmd.Positional.Name
+	}
+
+	err := createHosted(name)
 	if err != nil {
 		return err
 	}

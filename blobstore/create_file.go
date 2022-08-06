@@ -7,7 +7,10 @@ import (
 )
 
 type BlobstoreCreateFileCommand struct {
-	Verbose bool `short:"v" long:"verbose" description:"log verbose debug information"`
+	Verbose    bool `short:"v" long:"verbose" description:"log verbose debug information"`
+	Positional struct {
+		Name string `positional-arg-name:"name"`
+	} `positional-args:"yes"`
 }
 
 func (cmd *BlobstoreCreateFileCommand) Execute(args []string) error {
@@ -15,9 +18,9 @@ func (cmd *BlobstoreCreateFileCommand) Execute(args []string) error {
 		util.StopLogging()
 	}
 
-	name := "default"
-	if len(args) > 0 {
-		name = args[0]
+	name := "docker-proxy"
+	if cmd.Positional.Name != "" {
+		name = cmd.Positional.Name
 	}
 
 	err := createFile(name)

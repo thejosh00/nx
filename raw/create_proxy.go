@@ -8,7 +8,10 @@ import (
 )
 
 type RawCreateProxyCommand struct {
-	Verbose bool `short:"v" long:"verbose" description:"log verbose debug information"`
+	Verbose    bool `short:"v" long:"verbose" description:"log verbose debug information"`
+	Positional struct {
+		Name string `positional-arg-name:"name"`
+	} `positional-args:"yes"`
 }
 
 func (cmd *RawCreateProxyCommand) Execute(args []string) error {
@@ -16,7 +19,12 @@ func (cmd *RawCreateProxyCommand) Execute(args []string) error {
 		util.StopLogging()
 	}
 
-	err := createProxy("raw-proxy")
+	name := "raw-proxy"
+	if cmd.Positional.Name != "" {
+		name = cmd.Positional.Name
+	}
+
+	err := createProxy(name)
 	if err != nil {
 		return err
 	}
