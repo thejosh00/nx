@@ -31,3 +31,7 @@ type HttpClient struct {
 	AutoBlock  bool       `json:"autoBlock"`
 	Connection Connection `json:"connection"`
 }
+
+type Replication struct {
+	PreemptivePullEnabled bool `json:"preemptivePullEnabled"`
+}

@@ -4,12 +4,13 @@ import (
 	"fmt"
 	"org/sonatype/nx/api"
 	"org/sonatype/nx/util"
+	"strconv"
 )
 
 type SetAnonymousCommand struct {
 	Verbose    bool `short:"v" long:"verbose" description:"log verbose debug information"`
 	Positional struct {
-		Value bool `positional-arg-name:"value"`
+		Value string `positional-arg-name:"value"`
 	} `positional-args:"yes"`
 }
 
@@ -18,23 +19,34 @@ func (cmd *SetAnonymousCommand) Execute(args []string) error {
 		util.StopLogging()
 	}
 
-	err := setAnonymous(cmd.Positional.Value)
-	if err != nil {
+	value := true
+	if cmd.Positional.Value != "" {
+		v, err := strconv.ParseBool(cmd.Positional.Value)
+		if err != nil {
+			return err
+		}
+		value = v
+	}
+
+	if err := setAnonymous(value); err != nil {
 		return err
 	}
-	fmt.Println("Anonymous set to", cmd.Positional.Value)
+
+	fmt.Println("Anonymous set to", value)
 	return nil
 }
 
 type payload struct {
-	Enabled bool   `json:"enabled"`
-	UserId  string `json:"userId"`
+	Enabled   bool   `json:"enabled"`
+	UserId    string `json:"userId"`
+	RealmName string `json:"realmName"`
 }
 
 func setAnonymous(value bool) error {
 	payload := payload{
-		Enabled: value,
-		UserId:  "anonymous",
+		Enabled:   value,
+		UserId:    "anonymous",
+		RealmName: "NexusAuthorizingRealm",
 	}
 
 	return api.Put("beta/security/anonymous", payload, 200)

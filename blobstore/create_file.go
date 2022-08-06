@@ -18,7 +18,7 @@ func (cmd *BlobstoreCreateFileCommand) Execute(args []string) error {
 		util.StopLogging()
 	}
 
-	name := "docker-proxy"
+	name := "default"
 	if cmd.Positional.Name != "" {
 		name = cmd.Positional.Name
 	}
