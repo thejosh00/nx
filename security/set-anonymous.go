@@ -3,7 +3,6 @@ package security
 import (
 	"errors"
 	"fmt"
-	"log"
 	"org/sonatype/nx/api"
 	"org/sonatype/nx/util"
 	"strconv"
@@ -15,7 +14,7 @@ type SetAnonymousCommand struct {
 
 func (cmd *SetAnonymousCommand) Execute(args []string) error {
 	if !cmd.Verbose {
-		log.SetOutput(new(util.NoLogger))
+		util.StopLogging()
 	}
 
 	value := true

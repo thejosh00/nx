@@ -2,7 +2,6 @@ package raw
 
 import (
 	"fmt"
-	"log"
 	"org/sonatype/nx/api"
 	"org/sonatype/nx/repomodel"
 	"org/sonatype/nx/util"
@@ -14,7 +13,7 @@ type RawCreateHostedCommand struct {
 
 func (cmd *RawCreateHostedCommand) Execute(args []string) error {
 	if !cmd.Verbose {
-		log.SetOutput(new(util.NoLogger))
+		util.StopLogging()
 	}
 
 	err := createHosted("raw-hosted")

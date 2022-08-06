@@ -2,7 +2,6 @@ package blobstore
 
 import (
 	"fmt"
-	"log"
 	"org/sonatype/nx/api"
 	"org/sonatype/nx/util"
 )
@@ -13,7 +12,7 @@ type BlobstoreCreateFileCommand struct {
 
 func (cmd *BlobstoreCreateFileCommand) Execute(args []string) error {
 	if !cmd.Verbose {
-		log.SetOutput(new(util.NoLogger))
+		util.StopLogging()
 	}
 
 	name := "default"
