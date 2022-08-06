@@ -29,7 +29,7 @@ type raw struct {
 	ContentDisposition string `json:"contentDisposition"`
 }
 
-type payload struct {
+type hostedPayload struct {
 	Name    string                  `json:"name"`
 	Online  bool                    `json:"online"`
 	Raw     raw                     `json:"raw"`
@@ -37,7 +37,7 @@ type payload struct {
 }
 
 func createHosted(name string) error {
-	payload := payload{
+	payload := hostedPayload{
 		Name:   name,
 		Online: true,
 		Storage: repomodel.HostedStorage{

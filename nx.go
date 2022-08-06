@@ -16,6 +16,7 @@ func main() {
 		DockerCreateProxy   docker.DockerCreateProxyCommand      `command:"docker-create-proxy"`
 		NetworkWait         network.NetworkWaitCommand           `command:"network-wait"`
 		RawHosted           raw.RawCreateHostedCommand           `command:"raw-create-hosted"`
+		RawProxy            raw.RawCreateProxyCommand            `command:"raw-create-proxy"`
 		SetAnonymous        security.SetAnonymousCommand         `command:"set-anonymous"`
 	}
 
