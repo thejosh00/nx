@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/jessevdk/go-flags"
 	"org/sonatype/nx/blobstore"
+	"org/sonatype/nx/cleanup"
 	"org/sonatype/nx/docker"
 	"org/sonatype/nx/network"
 	"org/sonatype/nx/raw"
@@ -13,6 +14,7 @@ import (
 func main() {
 	var opts struct {
 		BlobstoreCreateFile blobstore.BlobstoreCreateFileCommand `command:"blobstore-create-file"`
+		CleanupCreatePolicy cleanup.CleanupCreatePolicyCommand   `command:"cleanup-create-policy"`
 		DockerCreateProxy   docker.DockerCreateProxyCommand      `command:"docker-create-proxy"`
 		NetworkWait         network.NetworkWaitCommand           `command:"network-wait"`
 		RawHosted           raw.RawCreateHostedCommand           `command:"raw-create-hosted"`
