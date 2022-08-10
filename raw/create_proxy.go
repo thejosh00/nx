@@ -4,22 +4,17 @@ import (
 	"fmt"
 	"org/sonatype/nx/api"
 	"org/sonatype/nx/repomodel"
-	"org/sonatype/nx/util"
 )
 
 type RawCreateProxyCommand struct {
-	Verbose    bool `short:"v" long:"verbose" description:"log verbose debug information"`
-	Pull       bool `short:"p" long:"pull" description:"enable pull replication"`
+	Pull       bool   `short:"p" long:"pull" description:"enable pull replication"`
+	Remote     string `short:"r" long:"remote" description:"remote url of server to proxy"`
 	Positional struct {
 		Name string `positional-arg-name:"name"`
 	} `positional-args:"yes"`
 }
 
 func (cmd *RawCreateProxyCommand) Execute(args []string) error {
-	if !cmd.Verbose {
-		util.StopLogging()
-	}
-
 	name := "raw-proxy"
 	if cmd.Positional.Name != "" {
 		name = cmd.Positional.Name

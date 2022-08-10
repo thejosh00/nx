@@ -3,11 +3,9 @@ package cleanup
 import (
 	"fmt"
 	"org/sonatype/nx/api"
-	"org/sonatype/nx/util"
 )
 
 type CleanupCreatePolicyCommand struct {
-	Verbose    bool   `short:"v" long:"verbose" description:"log verbose debug information"`
 	Format     string `short:"f" long:"format" required:"true" description:"format that cleanup policy applies to"`
 	Age        int    `short:"a" long:"componentAge" description:"remove components that were publish over this many days ago"`
 	Usage      int    `short:"u" long:"componentUsage" description:"remove components that haven't been downloaded in this many days"`
@@ -17,10 +15,6 @@ type CleanupCreatePolicyCommand struct {
 }
 
 func (cmd *CleanupCreatePolicyCommand) Execute(args []string) error {
-	if !cmd.Verbose {
-		util.StopLogging()
-	}
-
 	name := "cleanup"
 	if cmd.Positional.Name != "" {
 		name = cmd.Positional.Name

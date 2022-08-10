@@ -4,21 +4,15 @@ import (
 	"fmt"
 	"org/sonatype/nx/api"
 	"org/sonatype/nx/repomodel"
-	"org/sonatype/nx/util"
 )
 
 type DockerCreateProxyCommand struct {
-	Verbose    bool `short:"v" long:"verbose" description:"log verbose debug information"`
 	Positional struct {
 		Name string `positional-arg-name:"name"`
 	} `positional-args:"yes"`
 }
 
 func (cmd *DockerCreateProxyCommand) Execute(args []string) error {
-	if !cmd.Verbose {
-		util.StopLogging()
-	}
-
 	name := "docker-proxy"
 	if cmd.Positional.Name != "" {
 		name = cmd.Positional.Name

@@ -1,6 +1,9 @@
 package util
 
-import "log"
+import (
+	"log"
+	"os"
+)
 
 type NoLogger struct {
 }
@@ -11,4 +14,8 @@ func (l *NoLogger) Write(p []byte) (n int, err error) {
 
 func StopLogging() {
 	log.SetOutput(new(NoLogger))
+}
+
+func StartLogging() {
+	log.SetOutput(os.Stdout)
 }

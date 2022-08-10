@@ -3,22 +3,16 @@ package security
 import (
 	"fmt"
 	"org/sonatype/nx/api"
-	"org/sonatype/nx/util"
 	"strconv"
 )
 
 type SetAnonymousCommand struct {
-	Verbose    bool `short:"v" long:"verbose" description:"log verbose debug information"`
 	Positional struct {
 		Value string `positional-arg-name:"value"`
 	} `positional-args:"yes"`
 }
 
 func (cmd *SetAnonymousCommand) Execute(args []string) error {
-	if !cmd.Verbose {
-		util.StopLogging()
-	}
-
 	value := true
 	if cmd.Positional.Value != "" {
 		v, err := strconv.ParseBool(cmd.Positional.Value)
