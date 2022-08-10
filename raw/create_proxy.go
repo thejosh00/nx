@@ -8,7 +8,7 @@ import (
 
 type RawCreateProxyCommand struct {
 	Pull       bool   `short:"p" long:"pull" description:"enable pull replication"`
-	Remote     string `short:"r" long:"remote" description:"remote url of server to proxy"`
+	Remote     string `short:"r" long:"remote" default:"http://localhost:8081/repository/raw-hosted" description:"remote url of server to proxy"`
 	Positional struct {
 		Name string `positional-arg-name:"name"`
 	} `positional-args:"yes"`
@@ -47,7 +47,7 @@ func createProxy(name string, cmd *RawCreateProxyCommand) error {
 			StrictContentTypeValidation: true,
 		},
 		Proxy: repomodel.Proxy{
-			RemoteUrl:      "http://localhost:8081/repository/raw-hosted",
+			RemoteUrl:      cmd.Remote,
 			ContentMaxAge:  1440,
 			MetadataMaxAge: 1440,
 		},
