@@ -3,7 +3,6 @@ package config
 import (
 	"gopkg.in/yaml.v3"
 	"io/ioutil"
-	"log"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -17,14 +16,10 @@ type Config struct {
 var config Config
 
 func init() {
-	wd, err := os.Getwd()
-	if err != nil {
-		panic(err)
+	env := os.Getenv("NX_ENV")
+	if env == "" {
+		env = "default"
 	}
-
-	name := filepath.Base(wd)
-
-	log.Println("Reading config for", name)
 
 	home, err := os.UserHomeDir()
 	if err != nil {
@@ -40,10 +35,10 @@ func init() {
 		panic(err2)
 	}
 
-	if val, ok := data[name]; ok {
+	if val, ok := data[env]; ok {
 		config = val
 	} else {
-		panic("No configured environment for " + name)
+		panic("No configured environment for " + env)
 	}
 }
 
