@@ -3,6 +3,7 @@ package config
 import (
 	"gopkg.in/yaml.v3"
 	"io/ioutil"
+	"log"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -23,7 +24,7 @@ func init() {
 
 	name := filepath.Base(wd)
 
-	name = "nexus-internal"
+	log.Println("Reading config for", name)
 
 	home, err := os.UserHomeDir()
 	if err != nil {
