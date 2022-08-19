@@ -22,7 +22,7 @@ func (cmd *DockerCreateProxyCommand) Execute(args []string) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println("Created docker proxy")
+	fmt.Println("Created docker proxy", name)
 	return nil
 }
 

@@ -24,7 +24,7 @@ func (cmd *RawCreateProxyCommand) Execute(args []string) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println("Created raw proxy repository")
+	fmt.Println("Created raw proxy repository", name)
 	return nil
 }
 

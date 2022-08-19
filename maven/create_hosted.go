@@ -1,4 +1,4 @@
-package raw
+package maven
 
 import (
 	"fmt"
@@ -6,14 +6,14 @@ import (
 	"org/sonatype/nx/repomodel"
 )
 
-type RawCreateHostedCommand struct {
+type MavenCreateHostedCommand struct {
 	Positional struct {
 		Name string `positional-arg-name:"name"`
 	} `positional-args:"yes"`
 }
 
-func (cmd *RawCreateHostedCommand) Execute(args []string) error {
-	name := "raw-hosted"
+func (cmd *MavenCreateHostedCommand) Execute(args []string) error {
+	name := "maven-hosted"
 	if cmd.Positional.Name != "" {
 		name = cmd.Positional.Name
 	}
@@ -22,18 +22,20 @@ func (cmd *RawCreateHostedCommand) Execute(args []string) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println("Created raw hosted repository", name)
+	fmt.Println("Created maven hosted repository", name)
 	return nil
 }
 
-type raw struct {
+type maven struct {
+	VersionPolicy      string `json:"versionPolicy"`
+	LayoutPolicy       string `json:"layoutPolicy"`
 	ContentDisposition string `json:"contentDisposition"`
 }
 
 type hostedPayload struct {
 	Name    string                  `json:"name"`
 	Online  bool                    `json:"online"`
-	Raw     raw                     `json:"raw"`
+	Maven   maven                   `json:"maven"`
 	Storage repomodel.HostedStorage `json:"storage"`
 }
 
@@ -46,7 +48,9 @@ func createHosted(name string) error {
 			StrictContentTypeValidation: true,
 			WritePolicy:                 "allow",
 		},
-		Raw: raw{
+		Maven: maven{
+			VersionPolicy:      "MIXED",
+			LayoutPolicy:       "STRICT",
 			ContentDisposition: "ATTACHMENT",
 		},
 	}

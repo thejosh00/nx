@@ -5,6 +5,7 @@ import (
 	"org/sonatype/nx/blobstore"
 	"org/sonatype/nx/cleanup"
 	"org/sonatype/nx/docker"
+	"org/sonatype/nx/maven"
 	"org/sonatype/nx/network"
 	"org/sonatype/nx/raw"
 	"org/sonatype/nx/security"
@@ -18,6 +19,7 @@ func main() {
 		BlobstoreCreateFile blobstore.BlobstoreCreateFileCommand `command:"blobstore-create-file"`
 		CleanupCreatePolicy cleanup.CleanupCreatePolicyCommand   `command:"cleanup-create-policy"`
 		DockerCreateProxy   docker.DockerCreateProxyCommand      `command:"docker-create-proxy"`
+		MavenCreateHosted   maven.MavenCreateHostedCommand       `command:"maven-create-hosted"`
 		NetworkWait         network.NetworkWaitCommand           `command:"network-wait"`
 		RawHosted           raw.RawCreateHostedCommand           `command:"raw-create-hosted"`
 		RawProxy            raw.RawCreateProxyCommand            `command:"raw-create-proxy"`
