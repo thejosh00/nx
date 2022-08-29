@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/jessevdk/go-flags"
 	"org/sonatype/nx/blobstore"
 	"org/sonatype/nx/cleanup"
@@ -20,6 +21,7 @@ func main() {
 		CleanupCreatePolicy cleanup.CleanupCreatePolicyCommand   `command:"cleanup-create-policy"`
 		DockerCreateProxy   docker.DockerCreateProxyCommand      `command:"docker-create-proxy"`
 		MavenCreateHosted   maven.MavenCreateHostedCommand       `command:"maven-create-hosted"`
+		MavenCreateProxy    maven.MavenCreateProxyCommand        `command:"maven-create-proxy"`
 		NetworkWait         network.NetworkWaitCommand           `command:"network-wait"`
 		RawHosted           raw.RawCreateHostedCommand           `command:"raw-create-hosted"`
 		RawProxy            raw.RawCreateProxyCommand            `command:"raw-create-proxy"`
@@ -36,6 +38,7 @@ func main() {
 
 	_, err := parser.Parse()
 	if err != nil {
+		fmt.Println("Error:", err)
 		os.Exit(-1)
 	}
 }
