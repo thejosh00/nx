@@ -55,5 +55,5 @@ func createHosted(name string) error {
 		},
 	}
 
-	return api.Post("v1/repositories/raw/hosted", payload, 201)
+	return api.Post("v1/repositories/maven/hosted", payload, 201)
 }
