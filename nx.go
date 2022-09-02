@@ -10,22 +10,27 @@ import (
 	"org/sonatype/nx/network"
 	"org/sonatype/nx/raw"
 	"org/sonatype/nx/security"
+	"org/sonatype/nx/selector"
 	"org/sonatype/nx/util"
 	"os"
 )
 
 func main() {
 	var opts struct {
-		Verbose             func()                               `short:"v" long:"verbose" description:"log verbose debug information"`
-		BlobstoreCreateFile blobstore.BlobstoreCreateFileCommand `command:"blobstore-create-file"`
-		CleanupCreatePolicy cleanup.CleanupCreatePolicyCommand   `command:"cleanup-create-policy"`
-		DockerCreateProxy   docker.DockerCreateProxyCommand      `command:"docker-create-proxy"`
-		MavenCreateHosted   maven.MavenCreateHostedCommand       `command:"maven-create-hosted"`
-		MavenCreateProxy    maven.MavenCreateProxyCommand        `command:"maven-create-proxy"`
-		NetworkWait         network.NetworkWaitCommand           `command:"network-wait"`
-		RawHosted           raw.RawCreateHostedCommand           `command:"raw-create-hosted"`
-		RawProxy            raw.RawCreateProxyCommand            `command:"raw-create-proxy"`
-		SetAnonymous        security.SetAnonymousCommand         `command:"set-anonymous"`
+		Verbose                 func()                                  `short:"v" long:"verbose" description:"log verbose debug information"`
+		BlobstoreCreateFile     blobstore.BlobstoreCreateFileCommand    `command:"blobstore-create-file"`
+		CleanupCreatePolicy     cleanup.CleanupCreatePolicyCommand      `command:"cleanup-create-policy"`
+		DockerCreateProxy       docker.DockerCreateProxyCommand         `command:"docker-create-proxy"`
+		MavenCreateHosted       maven.MavenCreateHostedCommand          `command:"maven-create-hosted"`
+		MavenCreateProxy        maven.MavenCreateProxyCommand           `command:"maven-create-proxy"`
+		NetworkWait             network.NetworkWaitCommand              `command:"network-wait"`
+		RawHosted               raw.RawCreateHostedCommand              `command:"raw-create-hosted"`
+		RawProxy                raw.RawCreateProxyCommand               `command:"raw-create-proxy"`
+		SelectorCreate          selector.SelectorCreateCommand          `command:"selector-create"`
+		SelectorCreatePrivilege selector.SelectorCreatePrivilegeCommand `command:"selector-create-privilege"`
+		SecurityCreateRole      security.CreateRoleCommand              `command:"create-role"`
+		SecurityCreateUser      security.CreateUserCommand              `command:"create-user"`
+		SetAnonymous            security.SetAnonymousCommand            `command:"set-anonymous"`
 	}
 
 	util.StopLogging()
