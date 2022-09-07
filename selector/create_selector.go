@@ -6,7 +6,7 @@ import (
 )
 
 type SelectorCreateCommand struct {
-	Expression string `short:"e" long:"expression" default:"path =^ \"/org/sonatype\"" description:"expression for content selector"`
+	Expression string `short:"e" long:"expression" default:"path =~ \"/org/|/org/sonatype.*\"" description:"expression for content selector"`
 	Positional struct {
 		Name string `positional-arg-name:"name"`
 	} `positional-args:"yes"`

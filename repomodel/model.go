@@ -26,10 +26,17 @@ type Connection struct {
 	UseTrustStore bool `json:"useTrustStore"`
 }
 
+type Authentication struct {
+	Type     string `json:"type"`
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
 type HttpClient struct {
-	Blocked    bool       `json:"blocked"`
-	AutoBlock  bool       `json:"autoBlock"`
-	Connection Connection `json:"connection"`
+	Blocked        bool           `json:"blocked"`
+	AutoBlock      bool           `json:"autoBlock"`
+	Connection     Connection     `json:"connection"`
+	Authentication Authentication `json:"authentication"`
 }
 
 type Replication struct {
