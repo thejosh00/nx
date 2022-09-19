@@ -5,6 +5,7 @@ import (
 	"github.com/jessevdk/go-flags"
 	"org/sonatype/nx/blobstore"
 	"org/sonatype/nx/cleanup"
+	"org/sonatype/nx/db"
 	"org/sonatype/nx/docker"
 	"org/sonatype/nx/maven"
 	"org/sonatype/nx/network"
@@ -21,6 +22,7 @@ func main() {
 		Verbose                 func()                                  `short:"v" long:"verbose" description:"log verbose debug information"`
 		BlobstoreCreateFile     blobstore.BlobstoreCreateFileCommand    `command:"blobstore-create-file"`
 		CleanupCreatePolicy     cleanup.CleanupCreatePolicyCommand      `command:"cleanup-create-policy"`
+		DbListAssets            db.DbListAssetsCommand                  `command:"db-list-assets"`
 		DockerCreateProxy       docker.DockerCreateProxyCommand         `command:"docker-create-proxy"`
 		MavenCreateHosted       maven.MavenCreateHostedCommand          `command:"maven-create-hosted"`
 		MavenCreateProxy        maven.MavenCreateProxyCommand           `command:"maven-create-proxy"`
