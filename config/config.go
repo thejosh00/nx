@@ -18,7 +18,7 @@ var config Config
 func init() {
 	env := os.Getenv("NX_ENV")
 	if env == "" {
-		env = "default"
+		env = "development"
 	}
 
 	home, err := os.UserHomeDir()

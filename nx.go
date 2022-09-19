@@ -11,6 +11,7 @@ import (
 	"org/sonatype/nx/raw"
 	"org/sonatype/nx/security"
 	"org/sonatype/nx/selector"
+	"org/sonatype/nx/task"
 	"org/sonatype/nx/util"
 	"os"
 )
@@ -31,6 +32,8 @@ func main() {
 		SecurityCreateRole      security.CreateRoleCommand              `command:"create-role"`
 		SecurityCreateUser      security.CreateUserCommand              `command:"create-user"`
 		SetAnonymous            security.SetAnonymousCommand            `command:"set-anonymous"`
+		TaskList                task.TaskListCommand                    `command:"task-list"`
+		TaskRun                 task.TaskRunCommand                     `command:"task-run"`
 	}
 
 	util.StopLogging()

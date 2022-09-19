@@ -27,9 +27,10 @@ type Connection struct {
 }
 
 type Authentication struct {
-	Type     string `json:"type"`
-	Username string `json:"username"`
-	Password string `json:"password"`
+	Type       string `json:"type"`
+	Username   string `json:"username"`
+	Password   string `json:"password"`
+	Preemptive bool   `json:"preemptive"`
 }
 
 type HttpClient struct {

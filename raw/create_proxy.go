@@ -71,9 +71,10 @@ func createProxy(name string, cmd *RawCreateProxyCommand) error {
 
 	if cmd.Username != "" || cmd.Password != "" {
 		payload.HttpClient.Authentication = repomodel.Authentication{
-			Type:     "username",
-			Username: cmd.Username,
-			Password: cmd.Password,
+			Type:       "username",
+			Username:   cmd.Username,
+			Password:   cmd.Password,
+			Preemptive: true,
 		}
 	}
 

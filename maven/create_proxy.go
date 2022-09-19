@@ -7,7 +7,9 @@ import (
 )
 
 type MavenCreateProxyCommand struct {
-	Pull       bool   `short:"p" long:"pull" description:"enable pull replication"`
+	Pull       bool   `long:"pull" description:"enable pull replication"`
+	Username   string `short:"u" long:"user" default:"admin" description:"username for authentication"`
+	Password   string `short:"p" long:"password" default:"admin123" description:"password for authentication"`
 	Remote     string `short:"r" long:"remote" default:"http://localhost:8081/repository/maven-hosted" description:"remote url of server to proxy"`
 	Positional struct {
 		Name string `positional-arg-name:"name"`
@@ -71,6 +73,14 @@ func createProxy(name string, cmd *MavenCreateProxyCommand) error {
 			LayoutPolicy:       "STRICT",
 			ContentDisposition: "ATTACHMENT",
 		},
+	}
+
+	if cmd.Username != "" || cmd.Password != "" {
+		payload.HttpClient.Authentication = repomodel.Authentication{
+			Type:     "username",
+			Username: cmd.Username,
+			Password: cmd.Password,
+		}
 	}
 
 	return api.Post("v1/repositories/maven/proxy", payload, 201)
