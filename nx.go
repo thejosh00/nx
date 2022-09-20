@@ -23,6 +23,7 @@ func main() {
 		BlobstoreCreateFile     blobstore.BlobstoreCreateFileCommand    `command:"blobstore-create-file"`
 		CleanupCreatePolicy     cleanup.CleanupCreatePolicyCommand      `command:"cleanup-create-policy"`
 		DbListAssets            db.DbListAssetsCommand                  `command:"db-list-assets"`
+		DockerCreateHosted      docker.DockerCreateHostedCommand        `command:"docker-create-hosted"`
 		DockerCreateProxy       docker.DockerCreateProxyCommand         `command:"docker-create-proxy"`
 		MavenCreateHosted       maven.MavenCreateHostedCommand          `command:"maven-create-hosted"`
 		MavenCreateProxy        maven.MavenCreateProxyCommand           `command:"maven-create-proxy"`
