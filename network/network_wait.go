@@ -9,10 +9,24 @@ import (
 )
 
 type NetworkWaitCommand struct {
+	Host string `short:"h" long:"host" description:"host to connect to"`
+	Port string `short:"p" long:"port" description:"port to connect to"`
 }
 
 func (cmd *NetworkWaitCommand) Execute(args []string) error {
-	wait(config.Host(), config.Port())
+
+	host := config.Host()
+	port := config.Port()
+
+	if cmd.Host != "" {
+		host = cmd.Host
+	}
+
+	if cmd.Port != "" {
+		port = cmd.Port
+	}
+
+	wait(host, port)
 	return nil
 }
 
