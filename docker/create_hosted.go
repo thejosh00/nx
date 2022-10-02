@@ -18,7 +18,7 @@ func (cmd *DockerCreateHostedCommand) Execute(args []string) error {
 		name = cmd.Positional.Name
 	}
 
-	err := createHosted(name, 18002)
+	err := createHosted(name)
 	if err != nil {
 		return err
 	}
@@ -39,7 +39,7 @@ type hostedPayload struct {
 	Storage repomodel.HostedStorage `json:"storage"`
 }
 
-func createHosted(name string, port int) error {
+func createHosted(name string) error {
 	payload := hostedPayload{
 		Name:   name,
 		Online: true,
@@ -51,7 +51,7 @@ func createHosted(name string, port int) error {
 		Docker: dockerHosted{
 			V1Enabled:      false,
 			ForceBasicAuth: true,
-			HttpPort:       port,
+			HttpPort:       18001,
 		},
 	}
 

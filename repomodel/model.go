@@ -13,6 +13,7 @@ type HostedStorage struct {
 
 type Proxy struct {
 	RemoteUrl      string `json:"remoteUrl"`
+	RepositoryUrl  string `json:"repositoryUrl"`
 	ContentMaxAge  int    `json:"contentMaxAge"`
 	MetadataMaxAge int    `json:"metadataMaxAge"`
 }

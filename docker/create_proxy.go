@@ -7,7 +7,12 @@ import (
 )
 
 type DockerCreateProxyCommand struct {
-	Positional struct {
+	Pull          bool   `long:"pull" description:"enable pull replication"`
+	Username      string `short:"u" long:"user" default:"admin" description:"username for authentication"`
+	Password      string `short:"p" long:"password" default:"admin123" description:"password for authentication"`
+	Remote        string `short:"r" long:"remote" default:"http://localhost:18001" description:"remote url of server to proxy"`
+	RepositoryUrl string `long:"repositoryUrl" default:"http://localhost:8081/repository/docker-hosted" description:"Repository URL (if it's not the same as remote)"`
+	Positional    struct {
 		Name string `positional-arg-name:"name"`
 	} `positional-args:"yes"`
 }
@@ -18,7 +23,7 @@ func (cmd *DockerCreateProxyCommand) Execute(args []string) error {
 		name = cmd.Positional.Name
 	}
 
-	err := createProxy(name, 18001)
+	err := createProxy(name, cmd)
 	if err != nil {
 		return err
 	}
@@ -43,11 +48,12 @@ type payload struct {
 	Proxy         repomodel.Proxy         `json:"proxy"`
 	NegativeCache repomodel.NegativeCache `json:"negativeCache"`
 	HttpClient    repomodel.HttpClient    `json:"httpClient"`
+	Replication   repomodel.Replication   `json:"replication"`
 	Docker        docker                  `json:"docker"`
 	DockerProxy   dockerProxy             `json:"dockerProxy"`
 }
 
-func createProxy(name string, port int) error {
+func createProxy(name string, cmd *DockerCreateProxyCommand) error {
 	payload := payload{
 		Name:   name,
 		Online: true,
@@ -56,7 +62,8 @@ func createProxy(name string, port int) error {
 			StrictContentTypeValidation: true,
 		},
 		Proxy: repomodel.Proxy{
-			RemoteUrl:      "https://registry-1.docker.io",
+			RemoteUrl:      cmd.Remote,
+			RepositoryUrl:  cmd.RepositoryUrl,
 			ContentMaxAge:  1440,
 			MetadataMaxAge: 1440,
 		},
@@ -71,14 +78,25 @@ func createProxy(name string, port int) error {
 				UseTrustStore: false,
 			},
 		},
+		Replication: repomodel.Replication{
+			PreemptivePullEnabled: cmd.Pull,
+		},
 		Docker: docker{
 			V1Enabled:      false,
 			ForceBasicAuth: true,
-			HttpPort:       port,
+			HttpPort:       18002,
 		},
 		DockerProxy: dockerProxy{
 			IndexType: "HUB",
 		},
+	}
+
+	if cmd.Username != "" || cmd.Password != "" {
+		payload.HttpClient.Authentication = repomodel.Authentication{
+			Type:     "username",
+			Username: cmd.Username,
+			Password: cmd.Password,
+		}
 	}
 
 	return api.Post("v1/repositories/docker/proxy", payload, 201)

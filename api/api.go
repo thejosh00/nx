@@ -50,7 +50,7 @@ func Put(endpoint string, payload any, expectedStatus int) error {
 }
 
 func Request(method string, endpoint string, payload any, expectedStatus int) error {
-	jsonPayload, err := json.Marshal(payload)
+	jsonPayload, err := json.MarshalIndent(payload, "", "    ")
 	if err != nil {
 		panic(err)
 	}
