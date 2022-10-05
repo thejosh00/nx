@@ -31,17 +31,17 @@ type raw struct {
 }
 
 type hostedPayload struct {
-	Name    string                  `json:"name"`
-	Online  bool                    `json:"online"`
-	Raw     raw                     `json:"raw"`
-	Storage repomodel.HostedStorage `json:"storage"`
+	Name    string                   `json:"name"`
+	Online  bool                     `json:"online"`
+	Raw     raw                      `json:"raw"`
+	Storage *repomodel.HostedStorage `json:"storage,omitempty"`
 }
 
 func createHosted(name string) error {
 	payload := hostedPayload{
 		Name:   name,
 		Online: true,
-		Storage: repomodel.HostedStorage{
+		Storage: &repomodel.HostedStorage{
 			BlobStoreName:               "default",
 			StrictContentTypeValidation: true,
 			WritePolicy:                 "allow",

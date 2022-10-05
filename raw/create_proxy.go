@@ -31,46 +31,46 @@ func (cmd *RawCreateProxyCommand) Execute(args []string) error {
 }
 
 type proxyPayload struct {
-	Name          string                  `json:"name"`
-	Online        bool                    `json:"online"`
-	Proxy         repomodel.Proxy         `json:"proxy"`
-	NegativeCache repomodel.NegativeCache `json:"negativeCache"`
-	HttpClient    repomodel.HttpClient    `json:"httpClient"`
-	Storage       repomodel.Storage       `json:"storage"`
-	Replication   repomodel.Replication   `json:"replication"`
+	Name          string                   `json:"name"`
+	Online        bool                     `json:"online"`
+	Proxy         *repomodel.Proxy         `json:"proxy,omitempty"`
+	NegativeCache *repomodel.NegativeCache `json:"negativeCache,omitempty"`
+	HttpClient    *repomodel.HttpClient    `json:"httpClient,omitempty"`
+	Storage       *repomodel.Storage       `json:"storage,omitempty"`
+	Replication   *repomodel.Replication   `json:"replication,omitempty"`
 }
 
 func createProxy(name string, cmd *RawCreateProxyCommand) error {
 	payload := proxyPayload{
 		Name:   name,
 		Online: true,
-		Storage: repomodel.Storage{
+		Storage: &repomodel.Storage{
 			BlobStoreName:               "default",
 			StrictContentTypeValidation: true,
 		},
-		Proxy: repomodel.Proxy{
+		Proxy: &repomodel.Proxy{
 			RemoteUrl:      cmd.Remote,
 			ContentMaxAge:  1440,
 			MetadataMaxAge: 1440,
 		},
-		NegativeCache: repomodel.NegativeCache{
+		NegativeCache: &repomodel.NegativeCache{
 			Enabled:    true,
 			TimeToLive: 1440,
 		},
-		HttpClient: repomodel.HttpClient{
+		HttpClient: &repomodel.HttpClient{
 			Blocked:   false,
 			AutoBlock: true,
-			Connection: repomodel.Connection{
+			Connection: &repomodel.Connection{
 				UseTrustStore: false,
 			},
 		},
-		Replication: repomodel.Replication{
+		Replication: &repomodel.Replication{
 			PreemptivePullEnabled: cmd.Pull,
 		},
 	}
 
 	if cmd.Username != "" || cmd.Password != "" {
-		payload.HttpClient.Authentication = repomodel.Authentication{
+		payload.HttpClient.Authentication = &repomodel.Authentication{
 			Type:       "username",
 			Username:   cmd.Username,
 			Password:   cmd.Password,

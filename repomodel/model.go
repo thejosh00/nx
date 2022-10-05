@@ -12,10 +12,10 @@ type HostedStorage struct {
 }
 
 type Proxy struct {
-	RemoteUrl      string `json:"remoteUrl"`
-	RepositoryUrl  string `json:"repositoryUrl"`
-	ContentMaxAge  int    `json:"contentMaxAge"`
-	MetadataMaxAge int    `json:"metadataMaxAge"`
+	RemoteUrl      string `json:"remoteUrl,omitempty"`
+	RepositoryUrl  string `json:"repositoryUrl,omitempty"`
+	ContentMaxAge  int    `json:"contentMaxAge,omitempty"`
+	MetadataMaxAge int    `json:"metadataMaxAge,omitempty"`
 }
 
 type NegativeCache struct {
@@ -35,10 +35,10 @@ type Authentication struct {
 }
 
 type HttpClient struct {
-	Blocked        bool           `json:"blocked"`
-	AutoBlock      bool           `json:"autoBlock"`
-	Connection     Connection     `json:"connection"`
-	Authentication Authentication `json:"authentication"`
+	Blocked        bool            `json:"blocked"`
+	AutoBlock      bool            `json:"autoBlock"`
+	Connection     *Connection     `json:"connection,omitempty"`
+	Authentication *Authentication `json:"authentication,omitempty"`
 }
 
 type Replication struct {

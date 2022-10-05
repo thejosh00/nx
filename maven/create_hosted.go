@@ -33,22 +33,22 @@ type maven struct {
 }
 
 type hostedPayload struct {
-	Name    string                  `json:"name"`
-	Online  bool                    `json:"online"`
-	Maven   maven                   `json:"maven"`
-	Storage repomodel.HostedStorage `json:"storage"`
+	Name    string                   `json:"name"`
+	Online  bool                     `json:"online"`
+	Maven   *maven                   `json:"maven,omitempty"`
+	Storage *repomodel.HostedStorage `json:"storage,omitempty"`
 }
 
 func createHosted(name string) error {
 	payload := hostedPayload{
 		Name:   name,
 		Online: true,
-		Storage: repomodel.HostedStorage{
+		Storage: &repomodel.HostedStorage{
 			BlobStoreName:               "default",
 			StrictContentTypeValidation: true,
 			WritePolicy:                 "allow",
 		},
-		Maven: maven{
+		Maven: &maven{
 			VersionPolicy:      "MIXED",
 			LayoutPolicy:       "STRICT",
 			ContentDisposition: "ATTACHMENT",

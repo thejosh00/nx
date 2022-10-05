@@ -33,22 +33,22 @@ type dockerHosted struct {
 }
 
 type hostedPayload struct {
-	Name    string                  `json:"name"`
-	Online  bool                    `json:"online"`
-	Docker  dockerHosted            `json:"docker"`
-	Storage repomodel.HostedStorage `json:"storage"`
+	Name    string                   `json:"name"`
+	Online  bool                     `json:"online"`
+	Docker  *dockerHosted            `json:"docker,omitempty"`
+	Storage *repomodel.HostedStorage `json:"storage,omitempty"`
 }
 
 func createHosted(name string) error {
 	payload := hostedPayload{
 		Name:   name,
 		Online: true,
-		Storage: repomodel.HostedStorage{
+		Storage: &repomodel.HostedStorage{
 			BlobStoreName:               "default",
 			StrictContentTypeValidation: true,
 			WritePolicy:                 "allow",
 		},
-		Docker: dockerHosted{
+		Docker: &dockerHosted{
 			V1Enabled:      false,
 			ForceBasicAuth: true,
 			HttpPort:       18001,
