@@ -63,7 +63,6 @@ func createProxy(name string, cmd *DockerCreateProxyCommand) error {
 		},
 		Proxy: &repomodel.Proxy{
 			RemoteUrl:      cmd.Remote,
-			RepositoryUrl:  cmd.RepositoryUrl,
 			ContentMaxAge:  1440,
 			MetadataMaxAge: 1440,
 		},
@@ -80,6 +79,7 @@ func createProxy(name string, cmd *DockerCreateProxyCommand) error {
 		},
 		Replication: &repomodel.Replication{
 			PreemptivePullEnabled: cmd.Pull,
+			RepositoryUrl:         cmd.RepositoryUrl,
 		},
 		Docker: &docker{
 			V1Enabled:      false,

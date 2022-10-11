@@ -13,7 +13,6 @@ type HostedStorage struct {
 
 type Proxy struct {
 	RemoteUrl      string `json:"remoteUrl,omitempty"`
-	RepositoryUrl  string `json:"repositoryUrl,omitempty"`
 	ContentMaxAge  int    `json:"contentMaxAge,omitempty"`
 	MetadataMaxAge int    `json:"metadataMaxAge,omitempty"`
 }
@@ -42,5 +41,6 @@ type HttpClient struct {
 }
 
 type Replication struct {
-	PreemptivePullEnabled bool `json:"preemptivePullEnabled"`
+	PreemptivePullEnabled bool   `json:"preemptivePullEnabled"`
+	RepositoryUrl         string `json:"repositoryUrl,omitempty"`
 }
